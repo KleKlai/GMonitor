@@ -55,9 +55,7 @@
                 <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
                 <h4>Forgot Password</h4>
-                {{--  <h6 class="fw-light mb-3">
-                    Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
-                </h6>  --}}
+                <h6 class="fw-light mb-5">Enter your registered email to recover your account.</h6>
 
                 <form method="POST" action="{{ route('password.email') }}">
                     @csrf
@@ -72,8 +70,11 @@
 
                     </div>
                     {{--  <div class="text-center mt-4 fw-light">
-                        {{ "Don't have an account?" }} <a href="register.html" class="text-primary">Create</a>
+                        <a href="register.html" class="text-primary">Login Instead</a>
                     </div>  --}}
+                    <div class="text-center mt-4 fw-light">
+                        {{ "Don't have an account?" }} <a href="register.html" class="text-primary">Create</a>
+                    </div>
                 </form>
                 </div>
             </div>
