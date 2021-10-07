@@ -8,11 +8,11 @@
       </li>
 
       {{--  This should render when the page is on classroom  --}}
-      <li class="nav-item">
-        <a class="nav-link" href="../widgets/widgets.html">
+      {{--  <li class="nav-item">
+        <a class="nav-link" href="#">
           <i class="mdi mdi-share-variant menu-icon"></i>
           <span class="menu-title">Share Classroom</span>
         </a>
-      </li>
+      </li>  --}}
     </ul>
 </nav>

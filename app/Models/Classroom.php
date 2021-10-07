@@ -4,15 +4,16 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
 class Classroom extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name', 'user_id'
+        'code', 'name', 'subject', 'archive'
     ];
 
     protected static function boot()
@@ -21,9 +22,36 @@ class Classroom extends Model
 
         // auto-sets values on creation
         static::creating(function ($query) {
-            $query->user_id = Auth::user()->id;
-            $query->token   = Str::random(64);
+            $query->code   = Str::random(6);
         });
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)
+            ->withTimestamps()
+            ->withPivot(['is_teacher']);
+    }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(User::class)
+            ->withTimestamps()
+            ->withPivot(['is_teacher'])
+            ->wherePivot('is_teacher', true);
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class)
+            ->withTimestamps()
+            ->withPivot(['is_teacher'])
+            ->wherePivot('is_teacher', false);
+    }
+
+    public function scopeArchive($query, $type)
+    {
+        return $query->whereArchive($type);
     }
 
 }

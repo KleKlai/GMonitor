@@ -75,11 +75,12 @@
                 <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
                 <h4>Hello! let's get started</h4>
-                <h6 class="fw-light">Sign in to continue.</h6>
+                <h6 class="fw-light mb-4">Sign in to continue.</h6>
+
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="form-group">
-                    <input type="email" class="form-control form-control-lg" name="email" placeholder="Email">
+                    <input type="email" class="form-control form-control-lg" name="email" value="{{ old('email') }}" placeholder="Email">
                     </div>
                     <div class="form-group">
                     <input type="password" class="form-control form-control-lg" name="password" placeholder="Password">

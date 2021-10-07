@@ -12,9 +12,18 @@ class ClassroomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        // $this->middleware(['role_or_permission:teacher|student']);
+    }
+
     public function index()
     {
-        //
+        $classrooms = Classroom::select('id', 'token', 'name')->get();
+
+        return view('dashboard', compact('classrooms'));
     }
 
     /**
@@ -24,7 +33,7 @@ class ClassroomController extends Controller
      */
     public function create()
     {
-        //
+        return view('classroom.create');
     }
 
     /**
@@ -43,6 +52,8 @@ class ClassroomController extends Controller
             'name'      => $request->name,
         ]);
 
+        return redirect()->route('dashboard');
+
     }
 
     /**
@@ -53,7 +64,7 @@ class ClassroomController extends Controller
      */
     public function show(Classroom $classroom)
     {
-        //
+        return view('classroom.index', compact('classroom'));
     }
 
     /**

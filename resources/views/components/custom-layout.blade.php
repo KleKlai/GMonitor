@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="{{ asset('asset/vendors/simple-line-icons/css/simple-line-icons.css') }}">
   <link rel="stylesheet" href="{{ asset('asset/vendors/css/vendor.bundle.base.css') }}">
   <!-- endinject -->
+  @yield('style')
   <!-- Plugin css for this page -->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
@@ -57,6 +58,7 @@
   <!-- endinject -->
   <!-- Plugin js for this page -->
   <!-- End plugin js for this page -->
+  @yield('script')
   <!-- inject:js -->
   <script src="{{ asset('asset/js/off-canvas.js') }}"></script>
   <script src="{{ asset('asset/js/hoverable-collapse.js') }}"></script>

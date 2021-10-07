@@ -5,13 +5,49 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    You're logged in!
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">
+                <div class="row">
+                    <div class="col">
+                        {{ "Class List" }}
+                    </div>
+                    <div class="col float-right">
+                        <a href="{{ route('classroom.create') }}"><i class="mdi mdi-plus"></i></a>
+                    </div>
                 </div>
+            </h4>
+            <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th> Name </th>
+                        <th> Code </th>
+                        <th> # of Student </th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($classrooms as $classroom)
+                        <tr>
+                            <td>{{ $classroom->name }}</td>
+                            <td>{{ $classroom->token }}</td>
+                            <td>36</td>
+                            <td>
+                                <a href="{{ route('classroom.show', $classroom->id) }}" class="btn btn-primary btn-rounded btn-fw">Open Attendance</a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center">Create your first <a href="{{ route('classroom.create') }}">classroom</a></td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
             </div>
         </div>
+        </div>
     </div>
+
 </x-custom-layout>
