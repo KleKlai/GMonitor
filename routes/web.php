@@ -18,15 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
-
 Route::get('/dashboard', [ClassroomController::class, 'index'])->name('dashboard');
 
-Route::view('test', 'auth.register-success');
-
 Route::resource('/classroom', ClassroomController::class);
-// Route::post('/classroom/store', [ClassroomController::class, 'store']);
 
+Route::get('/test/{code}', [ClassroomController::class, 'join']);
 require __DIR__.'/auth.php';

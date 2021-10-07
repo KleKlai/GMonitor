@@ -21,7 +21,7 @@ class ClassroomController extends Controller
 
     public function index()
     {
-        $classrooms = Classroom::select('id', 'token', 'name')->get();
+        $classrooms = Classroom::select('id', 'code', 'name')->get();
 
         return view('dashboard', compact('classrooms'));
     }
@@ -48,9 +48,12 @@ class ClassroomController extends Controller
             'name'  => 'required', 'string', 'max:80'
         ]);
 
-        Classroom::create([
+        $classroom = Classroom::create([
             'name'      => $request->name,
         ]);
+
+        //Attach User as a Teacher
+        $classroom->users()->attach(auth()->user(), ['is_teacher' => true]);
 
         return redirect()->route('dashboard');
 
@@ -99,5 +102,10 @@ class ClassroomController extends Controller
     public function destroy(Classroom $classroom)
     {
         //
+    }
+
+    public function join($code)
+    {
+        dd($code);
     }
 }

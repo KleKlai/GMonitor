@@ -17,7 +17,7 @@ class CreateClassroomsTable extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('name');
-            $table->string('subject');
+            $table->string('subject')->nullable();
             $table->boolean('archive')->default(false);
             $table->timestamps();
             $table->softDeletes();
