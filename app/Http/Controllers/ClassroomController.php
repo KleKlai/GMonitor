@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Classroom;
 use Illuminate\Http\Request;
+use Spatie\Permission\Traits\HasRoles;
+use Auth;
 
 class ClassroomController extends Controller
 {
@@ -21,7 +23,15 @@ class ClassroomController extends Controller
 
     public function index()
     {
-        $classrooms = Classroom::select('id', 'code', 'name')->get();
+        //Validate Current User
+        if(Auth::user()->hasRole('student'))
+        {
+            return view('auth.register-success');
+        }
+
+        $classrooms = Classroom::archive(false)->whereHas('users', function ($query) {
+            return $query->where('users.id', auth()->user()->id);
+        })->withCount('users')->orderBy('id', 'desc')->get();
 
         return view('dashboard', compact('classrooms'));
     }
@@ -67,7 +77,9 @@ class ClassroomController extends Controller
      */
     public function show(Classroom $classroom)
     {
-        return view('classroom.index', compact('classroom'));
+        $students = $classroom->students;
+
+        return view('classroom.index', compact('classroom', 'students'));
     }
 
     /**
@@ -90,7 +102,16 @@ class ClassroomController extends Controller
      */
     public function update(Request $request, Classroom $classroom)
     {
-        //
+        $request->validate([
+            'name'  => 'required', 'string', 'max:80'
+        ]);
+
+        $classroom->update([
+            'name'      => $request->name,
+            'section'   => $request->section
+        ]);
+
+        return back();
     }
 
     /**
@@ -101,7 +122,9 @@ class ClassroomController extends Controller
      */
     public function destroy(Classroom $classroom)
     {
-        //
+        $classroom->delete();
+
+        return redirect()->route('classroom.index');
     }
 
     public function join($code)

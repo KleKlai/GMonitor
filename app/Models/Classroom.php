@@ -13,7 +13,7 @@ class Classroom extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'code', 'name', 'subject', 'archive'
+        'code', 'name', 'section', 'archive'
     ];
 
     protected static function boot()

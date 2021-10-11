@@ -20,7 +20,10 @@
                         <a class="nav-link" id="live-answer-tab" data-bs-toggle="tab" href="#live-answers" role="tab" aria-selected="false">Live Answers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link border-0" id="share-access-tab" data-bs-toggle="tab" href="#share-access" role="tab" aria-selected="false">Share Access</a>
+                        <a class="nav-link" id="share-access-tab" data-bs-toggle="tab" href="#share-access" role="tab" aria-selected="false">Share Access</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link border-0" id="settings-tab" data-bs-toggle="tab" href="#settings" role="tab" aria-selected="false">Settings</a>
                     </li>
                     </ul>
                     <div>
@@ -47,15 +50,21 @@
                                     <tr>
                                         <th> Name </th>
                                         <th> Gender </th>
-                                        <th> # of Student </th>
+                                        <th> Attendance</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>Magallen, Maynard</td>
-                                        <td>ME-111</td>
-                                        <td>36</td>
-                                    </tr>
+                                        @forelse ($students as $student)
+                                            <tr>
+                                                <td>{{ $student->name }}</td>
+                                                <td>Male</td>
+                                                <td>36</td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="3" class="text-center">Invite students to your class</a></td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                                 </div>
@@ -151,11 +160,57 @@
                                                 <h3 class="text-white upgrade-info mb-0">
                                                     Share your <span class="fw-bold">Code</span> for better outreach
                                                 </h3>
-                                                <button value="{{ $classroom->token }}" id="classcode" onclick="copyToClipboard('{{ $classroom->token }}')" class="btn btn-info upgrade-btn">{{ $classroom->token }}</a>
+                                                <button value="{{ $classroom->code }}" id="classcode" onclick="copyToClipboard('{{ $classroom->code }}')" class="btn btn-info upgrade-btn">{{ $classroom->code }}</a>
                                                 </div>
                                             </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show" id="settings" role="tabpanel" aria-labelledby="settings">
+                        <div class="row">
+                            <div class="col-md-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                    <h4 class="card-title">Settings</h4>
+                                    <p class="card-description">
+                                        {{ "Class Details" }}
+                                    </p>
+                                    <form class="forms-sample" method="POST" action="{{ route('classroom.update', $classroom) }}">
+
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <div class="form-group">
+                                            <label for="exampleInputUsername1">{{ "Class name" }}</label>
+                                            <input type="text" class="form-control" name="name" placeholder="Class name" value="{{ $classroom->name }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">{{ "Section" }}</label>
+                                            <input type="email" class="form-control" name="section" placeholder="Section" value="{{ $classroom->section }}">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary me-2 text-white">Save</button>
+                                    </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                    <h4 class="card-title">DANGER ZONE</h4>
+                                    <p class="card-description">
+                                        {{ "Once your classroom is deleted, all of its resources and data will be permanently deleted after 30 days. Before deleting your classroom, please download any data or information that you wish to retain." }}
+                                    </p>
+                                    <form class="forms-sample" method="POST" action="{{ route('classroom.destroy', $classroom) }}">
+
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger me-2 text-white">DELETE CLASS</button>
+                                    </form>
                                     </div>
                                 </div>
                             </div>

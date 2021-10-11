@@ -32,8 +32,8 @@
                     @forelse ($classrooms as $classroom)
                         <tr>
                             <td>{{ $classroom->name }}</td>
-                            <td>{{ $classroom->token }}</td>
-                            <td>36</td>
+                            <td>{{ $classroom->code }}</td>
+                            <td>{{ $classroom->users_count -1 }}</td>
                             <td>
                                 <a href="{{ route('classroom.show', $classroom->id) }}" class="btn btn-primary btn-rounded btn-fw">Open Attendance</a>
                             </td>

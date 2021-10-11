@@ -23,4 +23,5 @@ Route::get('/dashboard', [ClassroomController::class, 'index'])->name('dashboard
 Route::resource('/classroom', ClassroomController::class);
 
 Route::get('/test/{code}', [ClassroomController::class, 'join']);
+
 require __DIR__.'/auth.php';

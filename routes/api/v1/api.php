@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\LoginController;
+use App\Http\Controllers\api\v1\JoinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +23,7 @@ use App\Http\Controllers\api\v1\LoginController;
 // Users Route
 Route::prefix('/user')->group( function() {
     Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/logout', [LoginController::class, 'logout']);
 });
+
+Route::middleware('auth:api')->post('/join', [JoinController::class, 'joinclassroom']);
