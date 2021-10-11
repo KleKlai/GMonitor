@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\LoginController;
 use App\Http\Controllers\api\v1\JoinController;
+use App\Http\Controllers\api\v1\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,6 @@ Route::prefix('/user')->group( function() {
     Route::post('/logout', [LoginController::class, 'logout']);
 });
 
-Route::middleware('auth:api')->post('/join', [JoinController::class, 'joinclassroom']);
+Route::middleware('auth:api')->post('/join', [JoinController::class, 'joinClassroom']);
+Route::middleware('auth:api')->get('/search', [SearchController::class, 'searchClassroom']);
+

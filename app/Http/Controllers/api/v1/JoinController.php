@@ -10,7 +10,7 @@ use App\Models\Classroom;
 
 class JoinController extends Controller
 {
-    public function joinclassroom(Request $request)
+    public function joinClassroom(Request $request)
     {
         // return response(Auth()->user()->getRoleNames());
 
