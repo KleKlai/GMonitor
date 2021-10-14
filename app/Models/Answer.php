@@ -9,5 +9,8 @@ class Answer extends Model
 {
     use HasFactory;
 
-
+    public function questions()
+    {
+        return $this->belongsTo(Questions::class);
+    }
 }

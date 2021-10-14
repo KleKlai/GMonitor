@@ -28,6 +28,11 @@ class JoinController extends Controller
         // Find the classroom using $request->code
         $classroom = Classroom::where('code', $request->code)->first();
 
+        // Make restriction here process if the classroom is not found!
+        if($classroom == null){
+            return response('Classroom not found!');
+        }
+
         //Attach the user to the classroom
         $classroom->users()->attach(Auth()->user(), ['is_teacher' => false]);
 

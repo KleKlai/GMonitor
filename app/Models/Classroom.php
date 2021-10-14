@@ -54,4 +54,14 @@ class Classroom extends Model
         return $query->whereArchive($type);
     }
 
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
 }

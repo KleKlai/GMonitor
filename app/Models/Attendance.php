@@ -12,4 +12,9 @@ class Attendance extends Model
     protected $fillable = [
         'answer', 'visibility'
     ];
+
+    public function classrooms()
+    {
+        return $this->belongsTo(Classroom::class);
+    }
 }
