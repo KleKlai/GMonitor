@@ -6,6 +6,7 @@ use App\Http\Controllers\api\v1\LoginController;
 use App\Http\Controllers\api\v1\JoinController;
 use App\Http\Controllers\api\v1\SearchController;
 use App\Http\Controllers\api\v1\ClassroomController;
+use App\Http\Controllers\api\v1\AttendanceController;
 
 
 /*
@@ -33,6 +34,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/join', [JoinController::class, 'joinClassroom']);
     Route::get('/search', [SearchController::class, 'searchClassroom']);
     Route::get('/classroom-list', [ClassroomController::class, 'index']);
+    Route::post('/attendance', [AttendanceController::class, 'recordAttendance']);
 });
 
 

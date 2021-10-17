@@ -19,6 +19,7 @@ class CreateClassroomsTable extends Migration
             $table->string('name');
             $table->string('section')->nullable();
             $table->boolean('archive')->default(false);
+            $table->boolean('is_open')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
