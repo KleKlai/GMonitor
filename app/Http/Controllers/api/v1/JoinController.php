@@ -34,8 +34,13 @@ class JoinController extends Controller
         }
 
         //Attach the user to the classroom
-        $classroom->users()->attach(Auth()->user(), ['is_teacher' => false]);
+        //"syncWithoutDetaching" enable the pivot table to prevent duplicate entry if send the request twice
+        $classroom->users()->syncWithoutDetaching(Auth()->user(), ['is_teacher' => false]);
 
-        return response($classroom);
+        return response()->json([
+            "Status"    => "OK",
+            "Message"   => "User " . Auth()->user()->email . " joined classroom " . $classroom->name,
+            "Classroom" => $classroom,
+        ], 201);
     }
 }

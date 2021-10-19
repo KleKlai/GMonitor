@@ -11,14 +11,17 @@ class ClassroomController extends Controller
 {
     public function index()
     {
+        // Method 1:
         $data = Classroom::archive(false)->whereHas('users', function ($query) {
             return $query->where('users.id', auth()->user()->id);
         })->get();
 
         return response()->json([
             [
-                "User"  => Auth::user(),
-                "Classrooms"  => $data,
+                "Status"        => "OK",
+                "Message"       => "Success",
+                "User"          => Auth::user(),
+                "Classroom"     => $data,
             ]
         ]);
     }
