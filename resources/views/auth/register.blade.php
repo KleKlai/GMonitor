@@ -79,6 +79,25 @@
                 <h6 class="fw-light mb-4">Lorem Ipsum Lorem Ipsum Lorem Ipsum</h6>
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
+                    <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Register As</label>
+                          <div class="col-sm-4">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="role" value="student" checked="">
+                                Student
+                              <i class="input-helper"></i></label>
+                            </div>
+                          </div>
+                          <div class="col-sm-5">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="role" value="teacher">
+                                Teacher
+                              <i class="input-helper"></i></label>
+                            </div>
+                          </div>
+                    </div>
                     <div class="form-group">
                         <input type="text" class="form-control form-control-lg" name="name" value="{{ old('name', '') }}" placeholder="Name">
                     </div>
