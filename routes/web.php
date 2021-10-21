@@ -25,8 +25,13 @@ Route::get('/dashboard', [ClassroomController::class, 'index'])->name('dashboard
 Route::get('/profile/update', [PasswordController::class, 'index'])->name('profile.password');
 Route::post('/profile/update', [PasswordController::class, 'store'])->name('profile.password.update');
 Route::resource('/classroom', ClassroomController::class);
+Route::get('/archive/classroom', [ClassroomController::class, 'archiveClassroomIndex'])->name('archive-classroom-index');
+Route::get('/archive/classroom/{classroom}', [ClassroomController::class, 'archiveClassroom'])->name('archive-classroom');
+Route::get('/archive/classroom/{classroom}/unarchive', [ClassroomController::class, 'unarchiveClassroom'])->name('unarchive-classroom');
+Route::get('/classroom/remove-student/{classroom}/{user}', [ClassroomController::class, 'removeStudent'])->name('unenroll.student');
 
-//For Testing
-Route::get('/test/{code}', [ClassroomController::class, 'join']);
+Route::get('/test', function() {
+    return view('notification');
+});
 
 require __DIR__.'/auth.php';

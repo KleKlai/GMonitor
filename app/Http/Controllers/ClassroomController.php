@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classroom;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Traits\HasRoles;
 use Auth;
@@ -36,6 +37,21 @@ class ClassroomController extends Controller
         return view('dashboard', compact('classrooms'));
     }
 
+    public function archiveClassroomIndex()
+    {
+        //Validate Current User
+        if(Auth::user()->hasRole('student'))
+        {
+            return view('auth.register-success');
+        }
+
+        $classrooms = Classroom::archive(true)->whereHas('users', function ($query) {
+            return $query->where('users.id', auth()->user()->id);
+        })->withCount('users')->orderBy('id', 'desc')->get();
+
+        return view('archive', compact('classrooms'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -63,7 +79,7 @@ class ClassroomController extends Controller
         ]);
 
         //Attach User as a Teacher
-        $classroom->users()->attach(auth()->user(), ['is_teacher' => true]);
+        $classroom->users()->syncWithoutDetaching(auth()->user(), ['is_teacher' => true]);
 
         return redirect()->route('dashboard');
 
@@ -77,6 +93,11 @@ class ClassroomController extends Controller
      */
     public function show(Classroom $classroom)
     {
+        if(!$classroom->teachers->contains(Auth::user()->id) == Auth::user()->id)
+        {
+            return redirect()->back();
+        }
+
         $students = $classroom->students;
 
         return view('classroom.index', compact('classroom', 'students'));
@@ -127,8 +148,28 @@ class ClassroomController extends Controller
         return redirect()->route('classroom.index');
     }
 
-    public function join($code)
+    public function removeStudent(Classroom $classroom, User $user)
     {
-        dd($code);
+
+        //Remove the selected user to the classroom
+        $classroom->users()->detach($user);
+
+        //Throw email here notify the student the he/she has been remove from the classroom
+
+        return redirect()->back();
+    }
+
+    public function archiveClassroom(Classroom $classroom)
+    {
+        $classroom->update(["archive"=>true]);
+
+        return redirect()->back();
+    }
+
+    public function unarchiveClassroom(Classroom $classroom)
+    {
+        $classroom->update(["archive"=>false]);
+
+        return redirect()->back();
     }
 }

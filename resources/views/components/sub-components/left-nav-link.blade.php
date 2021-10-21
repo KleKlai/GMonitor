@@ -6,7 +6,12 @@
           <span class="menu-title">Dashboard</span>
         </a>
       </li>
-
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('archive-classroom-index') }}">
+            <i class="mdi mdi-archive menu-icon"></i>
+            <span class="menu-title">Archive</span>
+        </a>
+       </li>
       {{--  This should render when the page is on classroom  --}}
       {{--  <li class="nav-item">
         <a class="nav-link" href="#">

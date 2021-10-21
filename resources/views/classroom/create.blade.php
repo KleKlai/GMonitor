@@ -31,7 +31,7 @@
                       <input type="text" class="form-control" name="Name" placeholder="Subject">
                     </div>  --}}
                     <button type="submit" class="btn btn-primary me-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <a href="{{ route('dashboard') }}" class="btn btn-light">Cancel</button>
                 </form>
             </div>
         </div>

@@ -44,7 +44,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="text-center">Create your first <a href="{{ route('classroom.create') }}">classroom</a></td>
+                            <td colspan="4" class="text-center">No Data</td>
                         </tr>
                     @endforelse
                 </tbody>

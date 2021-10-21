@@ -39,9 +39,6 @@
                                         <div class="col">
                                             Students
                                         </div>
-                                        <div class="col float-right">
-                                            <a href="#"><i class="mdi mdi-plus"></i></a>
-                                        </div>
                                     </div>
                                 </h4>
                                 <div class="table-responsive">
@@ -51,6 +48,7 @@
                                         <th> Name </th>
                                         <th> Gender </th>
                                         <th> Attendance</th>
+                                        <th> Action </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -59,6 +57,11 @@
                                                 <td>{{ $student->name }}</td>
                                                 <td>Male</td>
                                                 <td>36</td>
+                                                <td>
+                                                    <a href="{{ route('unenroll.student', [$classroom, $student]) }}" class="btn btn-outline-secondary btn-rounded btn-icon">
+                                                        <i class="icon-ban text-success"></i>
+                                                    </button>
+                                                </td>
                                             </tr>
                                         @empty
                                             <tr>
@@ -202,6 +205,14 @@
                                 <div class="card">
                                     <div class="card-body">
                                     <h4 class="card-title">DANGER ZONE</h4>
+                                    <p class="card-description">
+                                        {{ "The classroom will be remove from student dashboard but all data will be retain." }}
+                                    </p>
+                                    @if($classroom->archive == false)
+                                        <a href="{{ route('archive-classroom', $classroom) }}" class="btn btn-warning me-2 text-white">ARCHIVE CLASS</a>
+                                    @else
+                                        <a href="{{ route('unarchive-classroom', $classroom) }}" class="btn btn-warning me-2 text-white">UNARCHIVE CLASS</a>
+                                    @endif
                                     <p class="card-description">
                                         {{ "Once your classroom is deleted, all of its resources and data will be permanently deleted after 30 days. Before deleting your classroom, please download any data or information that you wish to retain." }}
                                     </p>
