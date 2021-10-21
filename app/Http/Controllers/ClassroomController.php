@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classroom;
+use App\Models\Attendance;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Traits\HasRoles;
@@ -76,6 +77,11 @@ class ClassroomController extends Controller
 
         $classroom = Classroom::create([
             'name'      => ucwords($request->name),
+        ]);
+
+        $attendance = Attendance::create([
+            'user_id'       => Auth::user()->id,
+            'classroom_id'  => $classroom->id,
         ]);
 
         //Attach User as a Teacher
