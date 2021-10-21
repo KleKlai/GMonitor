@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\Classroom;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -81,5 +82,21 @@ class AttendanceController extends Controller
     public function destroy(Attendance $attendance)
     {
         //
+    }
+
+    public function attendance(Classroom $classroom)
+    {
+        $classroom->update([
+            'is_open'   => ($classroom->is_open == false) ? true : false,
+        ]);
+
+        if($classroom->is_open == true){
+            \Session::flash('success', 'Attendance has been open');
+
+        } else {
+            \Session::flash('success', 'Attendance has been close');
+        }
+
+        return redirect()->back();
     }
 }

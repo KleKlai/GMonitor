@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\AttendanceController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,7 @@ Route::get('/archive/classroom', [ClassroomController::class, 'archiveClassroomI
 Route::get('/archive/classroom/{classroom}', [ClassroomController::class, 'archiveClassroom'])->name('archive-classroom');
 Route::get('/archive/classroom/{classroom}/unarchive', [ClassroomController::class, 'unarchiveClassroom'])->name('unarchive-classroom');
 Route::get('/classroom/remove-student/{classroom}/{user}', [ClassroomController::class, 'removeStudent'])->name('unenroll.student');
+Route::get('/open-attendance/{classroom}', [AttendanceController::class, 'attendance'])->name('open.attendance');
 
 Route::get('/test', function() {
     return view('notification');

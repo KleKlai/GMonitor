@@ -75,11 +75,11 @@ class ClassroomController extends Controller
         ]);
 
         $classroom = Classroom::create([
-            'name'      => $request->name,
+            'name'      => ucwords($request->name),
         ]);
 
         //Attach User as a Teacher
-        $classroom->users()->syncWithoutDetaching(auth()->user(), ['is_teacher' => true]);
+        $classroom->users()->attach(auth()->user(), ['is_teacher' => true]);
 
         return redirect()->route('dashboard');
 

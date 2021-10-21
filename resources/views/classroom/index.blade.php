@@ -60,7 +60,7 @@
                                                 <td>
                                                     <a href="{{ route('unenroll.student', [$classroom, $student]) }}" class="btn btn-outline-secondary btn-rounded btn-icon">
                                                         <i class="icon-ban text-success"></i>
-                                                    </button>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @empty
