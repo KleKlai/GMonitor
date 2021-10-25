@@ -4,7 +4,7 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Models\Attendance;
+use App\Models\Attendance;
 use Auth;
 
 class AttendanceController extends Controller
