@@ -17,7 +17,7 @@ class CreateAttendancesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('classroom_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->boolean('is_open');
+            $table->boolean('is_open')->default(false);
             $table->timestamps();
         });
     }
