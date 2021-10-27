@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Classroom;
+use Illuminate\Support\Facades\Validator;
 
 class JoinController extends Controller
 {
@@ -15,14 +16,22 @@ class JoinController extends Controller
         // return response(Auth()->user()->getRoleNames());
 
         // Validate Incoming Data
-        $request->validate([
-            'code'  => 'required'
-        ]);
+        $validator = Validator::make($request->all(), array(
+            'code'     => 'required|string',
+        ));
+
+        //Throw error if validation above doesn't satisfy
+        if($validator->fails()) {
+            return response()->json(['Message' => $validator->errors()]);
+        }
 
         //Validate current user role
         if(!Auth()->user()->hasRole('student'))
         {
-            return response('unauthorized');
+            return response()->json([
+                "Status"    => "Ok",
+                "Message"   => "Unauthorized"
+            ]);
         }
 
         // Find the classroom using $request->code
@@ -30,7 +39,19 @@ class JoinController extends Controller
 
         // Make restriction here process if the classroom is not found!
         if($classroom == null){
-            return response('Classroom not found!');
+            return response()->json([
+                "Status"    => "Ok",
+                "Message"   => "Classroom doesn't exist"
+            ]);
+        }
+
+        // Validate if the student is already enrolled
+        if($classroom->users->contains(Auth()->user()))
+        {
+            return response()->json([
+                "Status"    => "OK",
+                "Message"   => "You are already enroll on classroom " . $classroom->name,
+            ], 201);
         }
 
         //Attach the user to the classroom

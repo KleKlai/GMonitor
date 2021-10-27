@@ -2,25 +2,62 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Classroom;
 use App\Models\Attendance;
-use Auth;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+// use Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AttendanceController extends Controller
 {
     public function recordAttendance(Request $request)
     {
-        // Who is the current login user?
-        // What classroom post request came from?
+        $validator = Validator::make($request->all(), array(
+            'code'     => 'required|string',
+        ));
 
-        //is the user enrolled in the current classroom?
+        if($validator->fails()) {
+            return response()->json(['Message' => $validator->errors()]);
+        }
 
-        Attendance::create([
-            'user_id'       =>  Auth::user(),
-            'classroom_id'  =>  $request->classroom,
-        ]);
+        //Find the classroom
+        $classroom = Classroom::firstWhere('code', $request->code);
 
-        return response("test");
+        //Catch the error here if the classroom doesn't exist
+        if($classroom == null){
+            return response()->json([
+                "Status"    => "OK",
+                "Message"   => "Classroom doesn't exist",
+            ]);
+        }
+
+        //Validate if the user enrolled in the current classroom?
+        if(!$classroom->students->contains(Auth::user()->id) == Auth::user()->id)
+        {
+            return response()->json([
+                "Status"    => "OK",
+                "Message"   => "Unauthorized, You are enroll in this class",
+            ]);
+        }
+
+        //Get the classroom attendance model
+        $attendance = $classroom->attendances->first();
+
+        //validate if the user already has attendance
+
+        //Attach the current login user to the attendance with parameters "Status" and "is_student"
+        $attendance->users()->attach(auth()->user());
+
+        return response()->json([
+                "Status"    => "OK",
+                "Message"   => "Attendance has been record.",
+            ]);
+    }
+
+    public function stopRecordAttendance(Request $request)
+    {
+
     }
 }

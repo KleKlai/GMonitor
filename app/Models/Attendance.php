@@ -9,12 +9,19 @@ class Attendance extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'answer', 'visibility'
+    protected $guarded = [
+        'id', 'created_at', 'updated_at'
     ];
 
     public function classrooms()
     {
         return $this->belongsTo(Classroom::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)
+            ->withTimestamps()
+            ->withPivot(['status']);
     }
 }

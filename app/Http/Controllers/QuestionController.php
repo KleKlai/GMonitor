@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Models\Classroom;
 use Illuminate\Http\Request;
+use Auth;
 
 class QuestionController extends Controller
 {
@@ -33,9 +35,25 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Classroom $classroom, Request $request)
     {
-        //
+
+        $request->validate([
+            'question'      => 'required',
+            'answer_by'     => 'required'
+        ]);
+
+        Question::create([
+            'user_id'       =>  Auth::user()->id,
+            'classroom_id'  =>  $classroom->id,
+            'question'      =>  $request->question,
+            'answer_by'     =>  $request->answer_by,
+            'visibility'    =>  'Public',
+        ]);
+
+        \Session::flash('success', 'Question send successfully');
+
+        return redirect()->back();
     }
 
     /**
