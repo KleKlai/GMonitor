@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewQuestion;
 use App\Models\Question;
 use App\Models\Classroom;
 use Illuminate\Http\Request;
@@ -43,7 +44,7 @@ class QuestionController extends Controller
             'answer_by'     => 'required'
         ]);
 
-        Question::create([
+        $model = Question::create([
             'user_id'       =>  Auth::user()->id,
             'classroom_id'  =>  $classroom->id,
             'question'      =>  $request->question,
@@ -52,6 +53,8 @@ class QuestionController extends Controller
         ]);
 
         \Session::flash('success', 'Question send successfully');
+
+        broadcast(new NewQuestion($model))->toOthers();
 
         return redirect()->back();
     }

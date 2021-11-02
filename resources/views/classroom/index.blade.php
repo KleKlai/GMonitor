@@ -108,6 +108,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="tab-pane fade show" id="live-answers" role="tabpanel" aria-labelledby="live-answers">
                         <div class="row">
                             <div class="col-sm-12">
@@ -146,6 +147,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="tab-pane fade show" id="share-access" role="tabpanel" aria-labelledby="share-access">
                         <div class="row">
                             <div class="col-sm-12">
