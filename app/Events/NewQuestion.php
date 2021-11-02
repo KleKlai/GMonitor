@@ -33,7 +33,7 @@ class NewQuestion implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('question.' . $this->question->classroom_id);
+        return new Channel('question.' . $this->question->classroom_id);
     }
 
     public function broadcastAs()
